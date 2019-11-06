@@ -120,6 +120,7 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
+int             proc_crsp(void);
 
 // swtch.S
 void            swtch(struct context**, struct context*);
