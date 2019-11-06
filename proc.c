@@ -538,7 +538,9 @@ void
 proc_crsp(void)
 {
   struct proc *p;
-  cprintf("name pid state");
+  cprintf("name pid state \n");
+  cprintf("----------------------- \n");
+
   acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       //print each process as a table collumns: name id state
