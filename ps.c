@@ -5,6 +5,6 @@
 int
 main(void)
 {
- printf(1, "Asanka's first user program on xv6\n");
+ printf(1, "Unix V6 was released in the year %d\n", getyear());
  exit();
 }
