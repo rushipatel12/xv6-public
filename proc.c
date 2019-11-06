@@ -534,9 +534,17 @@ procdump(void)
   }
 }
 
-int
+void
 proc_crsp(void)
 {
-  return 1999;
+  struct proc *p;
+  cprintf("name pid state");
+  acquire(&ptable.lock);
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      //print each process as a table collumns: name id state
+    }
+    release(&ptable.lock);
+
+  //return 1999;
 }
 
