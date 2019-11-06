@@ -342,7 +342,6 @@ scheduler(void)
       c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
-      cprintf("process [%s:%d] is running\n", p->name, p->pid);
 
       swtch(&(c->scheduler), p->context);
       switchkvm();
@@ -350,6 +349,8 @@ scheduler(void)
       // Process is done running for now.
       // It should have changed its p->state before coming back.
       c->proc = 0;
+      cprintf("process [%s:%d] is running\n", p->name, p->pid);
+
     }
     release(&ptable.lock);
 
