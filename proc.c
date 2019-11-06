@@ -534,7 +534,7 @@ procdump(void)
   }
 }
 
-void
+int
 proc_crsp(void)
 {
   return 1975;
