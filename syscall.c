@@ -103,7 +103,7 @@ extern int sys_unlink(void);
 extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
-extern int proc_crsp(void);
+extern int sys_crsp(void);
 
 
 static int (*syscalls[])(void) = {
@@ -128,7 +128,7 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-[SYS_crsp]   proc_crsp,
+[SYS_crsp]   sys_crsp,
 
 };
 

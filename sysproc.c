@@ -90,8 +90,8 @@ sys_uptime(void)
   return xticks;
 }
 
-// int
-// sys_crsp(void)
-// {
-//     return proc_crsp();
-// }
+int
+sys_crsp(void)
+{
+    return 1975;
+}
