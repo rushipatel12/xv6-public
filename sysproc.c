@@ -94,4 +94,5 @@ int
 sys_crsp(void)
 {
     proc_crsp();
+    return 0;
 }
