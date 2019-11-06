@@ -545,7 +545,7 @@ proc_crsp(void)
   acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       //print each process as a table collumns: name id state
-      cprintf("%d\n", p->pid);
+      cprintf("%s\n", p->name);
     }
     release(&ptable.lock);
 
