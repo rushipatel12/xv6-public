@@ -5,6 +5,6 @@
 int
 main(void)
 {
- printf(1, "Unix V6 was released in the year %d\n", crsp());
+ printf(1, "Unix V6 was released in the year %d\n", crsp()); //returned in sysproc.c
  exit();
 }

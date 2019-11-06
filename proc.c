@@ -533,3 +533,10 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+void
+proc_crsp(void)
+{
+  return 1975;
+}
+

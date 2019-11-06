@@ -93,5 +93,5 @@ sys_uptime(void)
 int
 sys_crsp(void)
 {
-    return 1975;
+    return proc_crsp();
 }
