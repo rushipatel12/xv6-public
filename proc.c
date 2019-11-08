@@ -545,10 +545,10 @@ proc_crsp(void)
   acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       //print each process as a table collumns: name id state
-      cprintf("%s\t%d\t%d \n", p->name, p->pid, (int) p->state);
+      if(p->pid){
+          cprintf("%s\t%d\t%d \n", p->name, p->pid, (int) p->state);
+      }
     }
     release(&ptable.lock);
-
-  //return 1999;
 }
 
