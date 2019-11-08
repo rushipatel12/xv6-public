@@ -546,7 +546,30 @@ proc_crsp(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       //print each process as a table collumns: name id state
       if(p->pid){
-          cprintf("%s\t%d\t%d \n", p->name, p->pid, (int) p->state);
+        char str[] = "tmp";
+        if((int) p->state == 0){
+          char str[] = "UNUSED";
+        }
+        if((int) p->state == 1){
+          char str[] = "EMBRYO";
+        }
+        if((int) p->state == 2){
+          char str[] = "SLEEPING";
+        }
+        if((int) p->state == 3){
+          char str[] = "RUNNABLE";
+
+        }
+        if((int) p->state == 4){
+          char str[] = "RUNNING";
+
+        }
+        if((int) p->state == 4){
+          char str[] = "ZOMBIE";
+
+        }
+        
+          cprintf("%s\t%d\t%s \n", p->name, p->pid, str);
       }
     }
     release(&ptable.lock);
