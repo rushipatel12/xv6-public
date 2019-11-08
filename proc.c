@@ -548,25 +548,24 @@ proc_crsp(void)
       if(p->pid){
         char str[] = "tmp";
         if((int) p->state == 0){
-          char str[] = "UNUSED";
+          str[6] = "UNUSED";
         }
         if((int) p->state == 1){
-          char str[] = "EMBRYO";
+          str[6] = "EMBRYO";
         }
         if((int) p->state == 2){
-          char str[] = "SLEEPING";
+          str[8] = "SLEEPING";
         }
         if((int) p->state == 3){
-          char str[] = "RUNNABLE";
+          str[8] = "RUNNABLE";
 
         }
         if((int) p->state == 4){
-          char str[] = "RUNNING";
+          str[7] = "RUNNING";
 
         }
         if((int) p->state == 4){
-          char str[] = "ZOMBIE";
-
+          str[6] = "ZOMBIE";
         }
         
           cprintf("%s\t%d\t%s \n", p->name, p->pid, str);
