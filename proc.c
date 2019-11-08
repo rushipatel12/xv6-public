@@ -535,21 +535,5 @@ procdump(void)
   }
 }
 
-void
-proc_crsp(void)
-{
-  struct proc *p;
-  cprintf("name\tpid\tstate \n");
-  cprintf("----------------------- \n");
 
-  acquire(&ptable.lock);
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      //print each process as a table collumns: name id state
-      if(p->pid){
-      const char* state[] = {"UNUSED", "EMBRYO", "SLEEPING", "RUNNABLE", "RUNNING", "ZOMBIE" };
-      cprintf("%s\t%d\t%s \n", p->name, p->pid, state[p->state]);
-      }
-    }
-    release(&ptable.lock);
-}
 
