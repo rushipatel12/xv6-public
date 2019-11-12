@@ -88,6 +88,9 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+  p->idleCount = 0;
+  p->iterationCount = 8;
+  p->queueNum = 3;
 
   release(&ptable.lock);
 
@@ -330,15 +333,27 @@ scheduler(void)
     // Enable interrupts on this processor.
     sti();
 
+
+
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
 
+
+
+      //Once selected to run:
+        //1. reset it's count of idle iterations to 0
+        //2. reduce it's number of runs at this queue level by 1
+        //3. switch it in as before.
+      p->idleCount = 0;
+      p->iterationsLeft--;
+
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
+
       c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
@@ -349,7 +364,7 @@ scheduler(void)
       // Process is done running for now.
       // It should have changed its p->state before coming back.
       c->proc = 0;
-      cprintf("process [%s:%d] is running\n", p->name, p->pid);
+      cprintf("process [%s:%d] is running. queue number: [%d], idle count: [%d], iterations left: [%d] \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
 
     }
     release(&ptable.lock);
