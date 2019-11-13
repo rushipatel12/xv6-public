@@ -368,6 +368,7 @@ scheduler(void)
         p->queueNum--;
         p->idleCount =0;
         p->iterationsLeft = 8;
+      }
     }
     release(&ptable.lock);
 
