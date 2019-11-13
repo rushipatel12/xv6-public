@@ -346,7 +346,7 @@ scheduler(void)
           p->iterationsLeft = 16;
         }else if(p->queueNum == 1){
           p->iterationsLeft = 24;
-        }else{
+        }else if(p->queueNum == 0){
            p->iterationsLeft = 500;
         }
       }
