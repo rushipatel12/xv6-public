@@ -334,31 +334,31 @@ scheduler(void)
     sti();
 
     int maxQueue = 3;
-    // acquire(&ptable.lock);
-    // for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-    //   p->idleCount++;
-    //   if(p->iterationsLeft == 0){
-    //     p->queueNum--;
-    //     if(p->queueNum == 2){
-    //       p->iterationsLeft = 16;
+    acquire(&ptable.lock);
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      p->idleCount++;
+      if(p->iterationsLeft == 0){
+        p->queueNum--;
+        if(p->queueNum == 2){
+          p->iterationsLeft = 16;
 
-    //     }else if(p->queueNum == 1){
-    //       p->iterationsLeft = 24;
-    //     }else{
-    //        p->iterationsLeft = 500;
-    //     }
-    //     p->idleCount =0;
-    //   }
-    //   if(p->queueNum > maxQueue){
-    //     maxQueue = p->queueNum;
-    //   }
-    // }
-    // release(&ptable.lock);
+        }else if(p->queueNum == 1){
+          p->iterationsLeft = 24;
+        }else{
+           p->iterationsLeft = 500;
+        }
+        p->idleCount =0;
+      }
+      if(p->queueNum > maxQueue){
+        maxQueue = p->queueNum;
+      }
+    }
+    release(&ptable.lock);
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE && p->queueNum == maxQueue)
+      if(p->state != RUNNABLE)
         continue;
 
 
@@ -367,8 +367,8 @@ scheduler(void)
         //1. reset it's count of idle iterations to 0
         //2. reduce it's number of runs at this queue level by 1
         //3. switch it in as before.
-      // p->idleCount = 0;
-      // p->iterationsLeft--;
+      p->idleCount = 0;
+      p->iterationsLeft--;
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
