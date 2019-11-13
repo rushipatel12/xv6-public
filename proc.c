@@ -89,7 +89,7 @@ found:
   p->state = EMBRYO;
   p->pid = nextpid++;
   p->idleCount = 0;
-  p->iterationCount = 8;
+  p->iterationsLeft = 8;
   p->queueNum = 3;
 
   release(&ptable.lock);
