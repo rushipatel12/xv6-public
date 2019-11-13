@@ -341,10 +341,10 @@ scheduler(void)
 
       //decrease p's queue level and change iterations left in that level
       if(p->iterationsLeft == 0){
-        if(p->queueNum != 0){
-          p->queueNum--;
-          p->idleCount =0;
-        }
+        // if(p->queueNum != 0){
+        //   p->queueNum--;
+        //   p->idleCount =0;
+        // }
         if(p->queueNum == 2){
           p->iterationsLeft = 16;
         }else if(p->queueNum == 1){
