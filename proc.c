@@ -339,7 +339,7 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       p->idleCount++;
       //decrease p's queue level and change iterations left in that level
-      if(p->iterationsLeft == 0){
+      if(p->iterationsLeft <= 0){
         p->queueNum--;
         p->idleCount =0;
         if(p->queueNum == 2){
