@@ -361,7 +361,7 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       // cprintf("max queue [%d]:", maxQueue);
       // cprintf("p's queue [%d]:", p->queueNum);
-      if(p->state == RUNNABLE && p->queueNum == maxQueue){
+      if(p->state == RUNNABLE){
 
       //Once selected to run:
         //1. reset it's count of idle iterations to 0
