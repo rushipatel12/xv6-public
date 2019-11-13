@@ -333,27 +333,27 @@ scheduler(void)
     // Enable interrupts on this processor.
     sti();
 
-    int maxQueue = 0;
-    acquire(&ptable.lock);
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      p->idleCount++;
-      if(p->iterationsLeft == 0){
-        p->queueNum--;
-        if(p->queueNum == 2){
-          p->iterationsLeft = 16;
+    // int maxQueue = 0;
+    // acquire(&ptable.lock);
+    // for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    //   p->idleCount++;
+    //   if(p->iterationsLeft == 0){
+    //     p->queueNum--;
+    //     if(p->queueNum == 2){
+    //       p->iterationsLeft = 16;
 
-        }else if(p->queueNum == 1){
-          p->iterationsLeft = 24;
-        }else{
-           p->iterationsLeft = 500;
-        }
-        p->idleCount =0;
-      }
-      if(p->queueNum > maxQueue){
-        maxQueue = p->queueNum;
-      }
-    }
-    release(&ptable.lock);
+    //     }else if(p->queueNum == 1){
+    //       p->iterationsLeft = 24;
+    //     }else{
+    //        p->iterationsLeft = 500;
+    //     }
+    //     p->idleCount =0;
+    //   }
+    //   if(p->queueNum > maxQueue){
+    //     maxQueue = p->queueNum;
+    //   }
+    // }
+    // release(&ptable.lock);
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
@@ -384,7 +384,7 @@ scheduler(void)
       // Process is done running for now.
       // It should have changed its p->state before coming back.
       c->proc = 0;
-      cprintf("process [%s:%d] is running. queue number: [%d], idle count: [%d], iterations left: [%d] \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
+      cprintf("process [%s:%d] is running. queue number: [%d], idle count: [%d], iterations left: [%d]0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
 
     }
     release(&ptable.lock);
