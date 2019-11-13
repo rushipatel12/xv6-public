@@ -353,7 +353,7 @@ scheduler(void)
            p->iterationsLeft = 500;
         }
       }
-      cprintf(p->queueNum);
+      cprintf("[%d]",p->queueNum);
       if(p->queueNum > maxQueue){
         maxQueue = p->queueNum;
       }
