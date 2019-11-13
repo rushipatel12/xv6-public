@@ -340,6 +340,7 @@ scheduler(void)
       if(p->iterationsLeft == 0){
         if(p->queueNum != 0){
           p->queueNum--;
+
         }
         if(p->queueNum == 2){
           p->iterationsLeft = 16;
@@ -360,17 +361,7 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE && p->queueNum != maxQueue){
-        cprintf("p's queue: [%d]", p->queueNum);
-        cprintf("max queue: [%d]", maxQueue);
-      if(p->queueNum < 0){
-        cprintf("*");
-      }
-      
-      // else{
-      //   cprintf("p's queue: [%d]", p->queueNum);
-      //   cprintf("max queue: [%d]", maxQueue);
-      // }
+      if(p->state != RUNNABLE)
         continue;
 
 
