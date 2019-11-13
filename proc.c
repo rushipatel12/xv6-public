@@ -355,17 +355,7 @@ scheduler(void)
       }
     }
     release(&ptable.lock);
-
-    // acquire(&ptable.lock);
-    // for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-    //   p->idleCount++;
-    //   if(p->iterationsLeft == 0){
-    //     p->queueNum--;
-    //     p->idleCount =0;
-    //     p->iterationsLeft = 8;
-    //   }
-    // }
-    // release(&ptable.lock);
+    cprintf("max queue [%d]", maxQueue);
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
