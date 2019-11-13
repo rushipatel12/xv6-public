@@ -333,24 +333,25 @@ scheduler(void)
     // Enable interrupts on this processor.
     sti();
 
-    int maxQueue = 3;
+    int maxQueue = 0;
     acquire(&ptable.lock);
+    //adjust the levels for processes and find the max queue
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       p->idleCount++;
+
+      //decrease p's queue level and change iterations left in that level
       if(p->iterationsLeft == 0){
         if(p->queueNum != 0){
           p->queueNum--;
-
+          p->idleCount =0;
         }
         if(p->queueNum == 2){
           p->iterationsLeft = 16;
-
         }else if(p->queueNum == 1){
           p->iterationsLeft = 24;
         }else{
            p->iterationsLeft = 500;
         }
-        p->idleCount =0;
       }
       if(p->queueNum > maxQueue){
         maxQueue = p->queueNum;
@@ -361,8 +362,12 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE && p->queueNum != maxQueue)
+      if(p->state != RUNNABLE && p->queueNum != maxQueue){
         continue;
+      }
+      cprintf("max queue [%d]:", maxQueue);
+      cprintf("p's queue [%d]:", p->queueNum);
+
 
 
 
