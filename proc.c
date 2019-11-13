@@ -338,7 +338,9 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       p->idleCount++;
       if(p->iterationsLeft == 0){
-        p->queueNum--;
+        if(p->queueNum != 0){
+          p->queueNum--;
+        }
         if(p->queueNum == 2){
           p->iterationsLeft = 16;
 
@@ -358,7 +360,7 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE)
+      if(p->state != RUNNABLE && p->queueNum == maxQueue)
         continue;
 
 
