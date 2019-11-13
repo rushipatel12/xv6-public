@@ -384,7 +384,7 @@ scheduler(void)
       // Process is done running for now.
       // It should have changed its p->state before coming back.
       c->proc = 0;
-      cprintf("process [%s:%d] is running. queue number: [%d], idle count: [%d], iterations left: [%d]0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
+      cprintf("process [%s:%d] is running. queue number: [%d], idle count: [%d], iterations left: %d0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
 
     }
     release(&ptable.lock);
