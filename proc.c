@@ -361,6 +361,9 @@ scheduler(void)
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE && p->queueNum == maxQueue)
+      if(p->queueNum < 0){
+        cprintf("*");
+      }
         continue;
 
 
