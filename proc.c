@@ -355,14 +355,13 @@ scheduler(void)
       }
     }
     release(&ptable.lock);
-    cprintf("max queue [%d]", maxQueue);
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       // cprintf("max queue [%d]:", maxQueue);
       // cprintf("p's queue [%d]:", p->queueNum);
-      if(p->state == RUNNABLE){
+      if(p->state == RUNNABLE && p->queueNum == maxQueue){
 
       //Once selected to run:
         //1. reset it's count of idle iterations to 0
