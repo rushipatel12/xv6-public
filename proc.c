@@ -364,7 +364,7 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       cprintf("max queue [%d]:", maxQueue);
       cprintf("p's queue [%d]:", p->queueNum);
-      if(p->state != RUNNABLE && p->queueNum != maxQueue){
+      if(p->state != RUNNABLE){
         continue;
       }
 
