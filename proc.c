@@ -333,35 +333,48 @@ scheduler(void)
     // Enable interrupts on this processor.
     sti();
 
-    int maxQueue = 0;
-    acquire(&ptable.lock);
-    //adjust the levels for processes and find the max queue
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      p->idleCount++;
-      //decrease p's queue level and change iterations left in that level
-      if(p->iterationsLeft <= 0){
-        p->queueNum--;
-        p->idleCount =0;
-        if(p->queueNum == 2){
-          p->iterationsLeft = 16;
-        }else if(p->queueNum == 1){
-          p->iterationsLeft = 24;
-        }else if(p->queueNum == 0){
-           p->iterationsLeft = 500;
-        }
-      }
-      if(p->queueNum > maxQueue){
-        maxQueue = p->queueNum;
-      }
-    }
-    release(&ptable.lock);
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      // cprintf("max queue [%d]:", maxQueue);
-      // cprintf("p's queue [%d]:", p->queueNum);
-      if(p->state == RUNNABLE){
+    int maxQueue = 0;
+    //adjust the levels for processes and find the max queue
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      
+      int queueIterations[4] = {500,24,16,8};
+
+      //check idle count and move up to avoid starvation
+      if(p->idleCount > queueIterations[p->queueNum] && p->queueNum < 3){
+        p->queueNum++;
+      }
+      
+      p->idleCount++;
+
+      //check if iterations left is less than or = to 0 and decrease queue
+      if(p->iterationsLeft <=0){
+        p->queueNum--;
+        p->idleCount = 0;
+        p->iterationsLeft = queueIterations[p->queueNum];
+      }
+      //decrease p's queue level and change iterations left in that level
+      // if(p->iterationsLeft <= 0){
+      //   p->queueNum--;
+      //   p->idleCount =0;
+      //   if(p->queueNum == 2){
+      //     p->iterationsLeft = queueIterations[2];
+      //   }else if(p->queueNum == 1){
+      //     p->iterationsLeft = queueIterations[1];
+      //   }else if(p->queueNum == 0){
+      //      p->iterationsLeft = queueIterations[0];
+      //   }
+      // }
+      
+       //update maxQueue
+      if(p->queueNum > maxQueue){
+        maxQueue = p->queueNum;
+      }
+    }
+      if(p->state == RUNNABLE && p->queueNum == maxQueue){
 
       //Once selected to run:
         //1. reset it's count of idle iterations to 0
