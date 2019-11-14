@@ -427,9 +427,10 @@ void scheduler(void)
       // It should have changed its p->state before coming back.
       c->proc = 0;
       cprintf("process [%s:%d] is running\n", p->name, p->pid);
-  }
-  release(&ptable.lock);
   }*/
+  release(&ptable.lock);
+  }
+  
 }
 
 // Enter scheduler.  Must hold only ptable.lock
