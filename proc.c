@@ -356,7 +356,7 @@ void scheduler(void)
       for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
         int queueIterations[4] = {500, 24, 16, 8};
 
-        //check idle count and move up to avoid starvation
+        //check idle count and raise queue to avoid starvation
         if (p2->idleCount >= queueIterations[p2->queueNum] && p2->queueNum < 3)
         {
           p2->queueNum++;
@@ -366,12 +366,14 @@ void scheduler(void)
         }
 
         //check iterations left to decrease queue
-        if (p2->iterationsLeft <= 0)
+        if (p2->iterationsLeft <= 0 && p2->queueNum > 0)
         {
           p2->queueNum--;
           p2->idleCount = 0;
           p2->iterationsLeft = queueIterations[p2->queueNum];
-        }
+          cprintf("yo");
+        } 
+        
 
         //update maxQueue
         if (p2->queueNum > maxQueue)
