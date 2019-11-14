@@ -380,7 +380,7 @@ void scheduler(void)
         }
       } */
 
-      /*if (p->state == RUNNABLE)
+      if (p->state == RUNNABLE)
       {
 
         //Once selected to run:
@@ -406,7 +406,9 @@ void scheduler(void)
         c->proc = 0;
         cprintf("process [%s:%d] is running. queue number: [%d], idle count: [%d], iterations left: %d0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
       }
-    }*/
+    }
+ // continue
+  /*
 
     if(p->state != RUNNABLE)
         continue;
@@ -427,7 +429,7 @@ void scheduler(void)
       cprintf("process [%s:%d] is running\n", p->name, p->pid);
   }
   release(&ptable.lock);
-  }
+  }*/
 }
 
 // Enter scheduler.  Must hold only ptable.lock
