@@ -373,7 +373,7 @@ scheduler(void)
           maxQueue = p->queueNum;
         }
 
-      if(p->state == RUNNABLE){
+      if(p->state == RUNNABLE && p->queueNum == maxQueue){
 
 
       //Once selected to run:
