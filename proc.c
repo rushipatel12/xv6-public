@@ -374,7 +374,11 @@ void scheduler(void)
         {
           maxQueue = p->queueNum;
         }
+      cprintf("end loop");
+
       }
+
+      cprintf("[%d]", maxQueue);
 
 
       if (p->state == RUNNABLE)
