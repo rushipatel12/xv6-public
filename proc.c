@@ -375,7 +375,7 @@ scheduler(void)
       }
     }
       if(p->state == RUNNABLE && p->queueNum == maxQueue){
-      cprintf("hi");
+      cprintf("[%d]", maxQueue);
 
 
       //Once selected to run:
