@@ -371,7 +371,6 @@ void scheduler(void)
           p2->queueNum--;
           p2->idleCount = 0;
           p2->iterationsLeft = queueIterations[p2->queueNum];
-          cprintf("yo");
         } 
         
 
