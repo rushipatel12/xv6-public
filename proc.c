@@ -372,6 +372,7 @@ scheduler(void)
        //update maxQueue
       if(p->queueNum > maxQueue){
         maxQueue = p->queueNum;
+        cprintf("hi");
       }
     }
       if(p->state == RUNNABLE && p->queueNum == maxQueue){
