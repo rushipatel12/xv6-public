@@ -382,7 +382,7 @@ void scheduler(void)
         }
       } */
 
-      if (p->state == RUNNABLE)
+      /*if (p->state == RUNNABLE)
       {
 
         //Once selected to run:
@@ -408,8 +408,27 @@ void scheduler(void)
         c->proc = 0;
         cprintf("process [%s:%d] is running. queue number: [%d], idle count: [%d], iterations left: %d0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
       }
-    }
-    release(&ptable.lock);
+    }*/
+
+    if(p->state != RUNNABLE)
+        continue;
+
+      // Switch to chosen process.  It is the process's job
+      // to release ptable.lock and then reacquire it
+      // before jumping back to us.
+      c->proc = p;
+      switchuvm(p);
+      p->state = RUNNING;
+
+      swtch(&(c->scheduler), p->context);
+      switchkvm();
+
+      // Process is done running for now.
+      // It should have changed its p->state before coming back.
+      c->proc = 0;
+      cprintf("process [%s:%d] is running\n", p->name, p->pid);
+  }
+  release(&ptable.lock);
   }
 }
 
