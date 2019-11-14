@@ -345,7 +345,7 @@ void scheduler(void)
   {
     // Enable interrupts on this processor.
     sti();
-
+  /*
     // Loop over process table looking for process to run.
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
@@ -379,7 +379,7 @@ void scheduler(void)
         {
           maxQueue = p2->queueNum;
         }
-      }
+      } */
 
       if (p->state == RUNNABLE)
       {
