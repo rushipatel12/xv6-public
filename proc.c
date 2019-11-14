@@ -336,7 +336,7 @@ int wait(void)
 void scheduler(void)
 {
   struct proc *p;
-  //struct proc *p2;
+  struct proc *p2;
 
   struct cpu *c = mycpu();
   c->proc = 0;
@@ -350,8 +350,8 @@ void scheduler(void)
     acquire(&ptable.lock);
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
-      //int maxQueue = 0;
-    /*
+      int maxQueue = 0;
+    
       //adjust the queue level for each process and get the maxQueue
       for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
         int queueIterations[4] = {500, 24, 16, 8};
@@ -378,7 +378,7 @@ void scheduler(void)
         {
           maxQueue = p2->queueNum;
         }
-      } */
+      } 
 
       if (p->state == RUNNABLE)
       {
