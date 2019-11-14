@@ -358,10 +358,9 @@ void scheduler(void)
           p->idleCount = 0;
         }else{
           p->idleCount++;
-
         }
 
-        //check  iterations left to and decrease queue
+        //check iterations left to and decrease queue
         if (p->iterationsLeft <= 0)
         {
           p->queueNum--;
@@ -374,12 +373,11 @@ void scheduler(void)
         {
           maxQueue = p->queueNum;
         }
-      cprintf("end loop");
+      cprintf("end loop \n");
+      cprintf("[%d] \n", maxQueue);
+
 
       }
-
-      cprintf("[%d]", maxQueue);
-
 
       if (p->state == RUNNABLE)
       {
