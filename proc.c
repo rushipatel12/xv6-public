@@ -336,7 +336,7 @@ int wait(void)
 void scheduler(void)
 {
   struct proc *p;
-  struct proc *p2;
+  //struct proc *p2;
 
   struct cpu *c = mycpu();
   c->proc = 0;
@@ -353,30 +353,29 @@ void scheduler(void)
       int maxQueue = 0;
     
       //adjust the queue level for each process and get the maxQueue
-      for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
+      for (p = ptable.proc; p < &ptable.proc[NPROC]; p++){
         int queueIterations[4] = {500, 24, 16, 8};
 
         //check idle count and move up to avoid starvation
-        if (p2->idleCount >= queueIterations[p2->queueNum] && p2->queueNum < 3)
+        if (p->idleCount >= queueIterations[p->queueNum] && p->queueNum < 3)
         {
-          p2->queueNum++;
-          p2->idleCount = 0;
-        }else{
-          p2->idleCount++;
-        }
+          p->queueNum++;
+          p->idleCount = 0;
+        }        
 
         //check iterations left to decrease queue
-        if (p2->iterationsLeft <= 0)
+        if (p->iterationsLeft <= 0)
         {
-          p2->queueNum--;
-          p2->idleCount = 0;
-          p2->iterationsLeft = queueIterations[p2->queueNum];
+          p->queueNum--;
+          p->idleCount = 0;
+          p->iterationsLeft = queueIterations[p->queueNum];
         }
 
+        p->idleCount++;
         //update maxQueue
-        if (p2->queueNum > maxQueue)
+        if (p->queueNum > maxQueue)
         {
-          maxQueue = p2->queueNum;
+          maxQueue = p->queueNum;
         }
       } 
 
