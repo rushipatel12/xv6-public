@@ -372,10 +372,11 @@ scheduler(void)
        //update maxQueue
       if(p->queueNum > maxQueue){
         maxQueue = p->queueNum;
-        cprintf("hi");
       }
     }
       if(p->state == RUNNABLE && p->queueNum == maxQueue){
+      cprintf("hi");
+
 
       //Once selected to run:
         //1. reset it's count of idle iterations to 0
