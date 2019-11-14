@@ -335,7 +335,7 @@ int wait(void)
 //      via swtch back to the scheduler.
 void scheduler(void)
 {
-  struct proc *p;
+  extern struct proc *p;
   //struct proc *p2;
 
   struct cpu *c = mycpu();
