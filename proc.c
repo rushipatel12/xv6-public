@@ -348,7 +348,6 @@ void scheduler(void)
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
       int maxQueue = 0;
-      acquire(&ptable.lock);
       for (p = ptable.proc; p < &ptable.proc[NPROC]; p++){
         int queueIterations[4] = {500, 24, 16, 8};
 
