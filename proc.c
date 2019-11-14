@@ -351,23 +351,23 @@ scheduler(void)
       p->idleCount++;
 
       //check if iterations left is less than or = to 0 and decrease queue
-      if(p->iterationsLeft <=0){
-        p->queueNum--;
-        p->idleCount = 0;
-        p->iterationsLeft = queueIterations[p->queueNum];
-      }
-      //decrease p's queue level and change iterations left in that level
-      // if(p->iterationsLeft <= 0){
+      // if(p->iterationsLeft <=0){
       //   p->queueNum--;
-      //   p->idleCount =0;
-      //   if(p->queueNum == 2){
-      //     p->iterationsLeft = queueIterations[2];
-      //   }else if(p->queueNum == 1){
-      //     p->iterationsLeft = queueIterations[1];
-      //   }else if(p->queueNum == 0){
-      //      p->iterationsLeft = queueIterations[0];
-      //   }
+      //   p->idleCount = 0;
+      //   p->iterationsLeft = queueIterations[p->queueNum];
       // }
+      //decrease p's queue level and change iterations left in that level
+      if(p->iterationsLeft <= 0){
+        p->queueNum--;
+        p->idleCount =0;
+        if(p->queueNum == 2){
+          p->iterationsLeft = queueIterations[2];
+        }else if(p->queueNum == 1){
+          p->iterationsLeft = queueIterations[1];
+        }else if(p->queueNum == 0){
+           p->iterationsLeft = queueIterations[0];
+        }
+      }
       
        //update maxQueue
       if(p->queueNum > maxQueue){
