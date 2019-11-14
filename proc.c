@@ -361,7 +361,9 @@ void scheduler(void)
         {
           p->queueNum++;
           p->idleCount = 0;
-        }        
+        }else{
+          p->idleCount++;
+        }
 
         //check iterations left to decrease queue
         if (p->iterationsLeft <= 0)
@@ -371,7 +373,6 @@ void scheduler(void)
           p->iterationsLeft = queueIterations[p->queueNum];
         }
 
-        p->idleCount++;
         //update maxQueue
         if (p->queueNum > maxQueue)
         {
