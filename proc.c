@@ -344,11 +344,11 @@ scheduler(void)
       int queueIterations[4] = {500,24,16,8};
 
       //check idle count and move up to avoid starvation
-      if(p->idleCount > queueIterations[p->queueNum] && p->queueNum < 3){
-        p->queueNum++;
-      }
+      // if(p->idleCount > queueIterations[p->queueNum] && p->queueNum < 3){
+      //   p->queueNum++;
+      // }
       
-      p->idleCount++;
+      // p->idleCount++;
 
       //check if iterations left is less than or = to 0 and decrease queue
       // if(p->iterationsLeft <=0){
@@ -374,9 +374,8 @@ scheduler(void)
         maxQueue = p->queueNum;
       }
     }
-          cprintf("[%d]", maxQueue);
 
-      if(p->state == RUNNABLE && p->queueNum == maxQueue){
+      if(p->state == RUNNABLE){
 
 
       //Once selected to run:
