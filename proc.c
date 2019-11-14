@@ -380,7 +380,7 @@ void scheduler(void)
         }
       } 
 
-      if (p->state == RUNNABLE)
+      if (p->state == RUNNABLE && p->queueNum = maxQueue)
       {
 
         //Once selected to run:
