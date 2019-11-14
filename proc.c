@@ -349,6 +349,8 @@ void scheduler(void)
     // Loop over process table looking for process to run.
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
+      cprintf("process [%s:%d]. queue number: [%d], idle count: [%d], iterations left: %d0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
+
       int maxQueue = 0;
 
       //adjust the queue level for each process and get the maxQueue
@@ -364,7 +366,7 @@ void scheduler(void)
           p2->idleCount++;
         }
 
-        //check iterations left to and decrease queue
+        //check iterations left to decrease queue
         if (p2->iterationsLeft <= 0)
         {
           p2->queueNum--;
