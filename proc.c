@@ -345,14 +345,14 @@ void scheduler(void)
   {
     // Enable interrupts on this processor.
     sti();
-  /*
+  
     // Loop over process table looking for process to run.
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
       cprintf("process [%s:%d]. queue number: [%d], idle count: [%d], iterations left: %d0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
 
       int maxQueue = 0;
-
+  /*
       //adjust the queue level for each process and get the maxQueue
       for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
         int queueIterations[4] = {500, 24, 16, 8};
