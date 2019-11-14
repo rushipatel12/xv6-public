@@ -333,41 +333,83 @@ int wait(void)
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
-void
-scheduler(void)
+void scheduler(void)
 {
   struct proc *p;
+  //struct proc *p2;
+
   struct cpu *c = mycpu();
   c->proc = 0;
-  
-  for(;;){
+
+  for (;;)
+  {
     // Enable interrupts on this processor.
     sti();
-
+  
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE)
-        continue;
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+    {
+      cprintf("process [%s:%d]. queue number: [%d], idle count: [%d], iterations left: %d0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
 
-      // Switch to chosen process.  It is the process's job
-      // to release ptable.lock and then reacquire it
-      // before jumping back to us.
-      c->proc = p;
-      switchuvm(p);
-      p->state = RUNNING;
+      //int maxQueue = 0;
+    /*
+      //adjust the queue level for each process and get the maxQueue
+      for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
+        int queueIterations[4] = {500, 24, 16, 8};
 
-      swtch(&(c->scheduler), p->context);
-      switchkvm();
+        //check idle count and move up to avoid starvation
+        if (p2->idleCount >= queueIterations[p2->queueNum] && p2->queueNum < 3)
+        {
+          p2->queueNum++;
+          p2->idleCount = 0;
+        }else{
+          p2->idleCount++;
+        }
 
-      // Process is done running for now.
-      // It should have changed its p->state before coming back.
-      c->proc = 0;
-      cprintf("process [%s:%d] is running\n", p->name, p->pid);
+        //check iterations left to decrease queue
+        if (p2->iterationsLeft <= 0)
+        {
+          p2->queueNum--;
+          p2->idleCount = 0;
+          p2->iterationsLeft = queueIterations[p2->queueNum];
+        }
 
+        //update maxQueue
+        if (p2->queueNum > maxQueue)
+        {
+          maxQueue = p2->queueNum;
+        }
+      } */
+
+      if (p->state == RUNNABLE)
+      {
+
+        //Once selected to run:
+        //1. reset it's count of idle iterations to 0
+        //2. reduce it's number of runs at this queue level by 1
+        //3. switch it in as before.
+        p->idleCount = 0;
+        p->iterationsLeft--;
+
+        // Switch to chosen process.  It is the process's job
+        // to release ptable.lock and then reacquire it
+        // before jumping back to us.
+
+        c->proc = p;
+        switchuvm(p);
+        p->state = RUNNING;
+
+        swtch(&(c->scheduler), p->context);
+        switchkvm();
+
+        // Process is done running for now.
+        // It should have changed its p->state before coming back.
+        c->proc = 0;
+        cprintf("process [%s:%d] is running. queue number: [%d], idle count: [%d], iterations left: %d0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
+      }
     }
     release(&ptable.lock);
-
   }
 }
 
