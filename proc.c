@@ -348,6 +348,7 @@ void scheduler(void)
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
       int maxQueue = 0;
+      acquire(&ptable.lock);
       for (p = ptable.proc; p < &ptable.proc[NPROC]; p++){
         int queueIterations[4] = {500, 24, 16, 8};
 
@@ -361,7 +362,7 @@ void scheduler(void)
 
         }
 
-        //check if iterations left is less than or = to 0 and decrease queue
+        //check  iterations left to and decrease queue
         if (p->iterationsLeft <= 0)
         {
           p->queueNum--;
@@ -375,6 +376,8 @@ void scheduler(void)
           maxQueue = p->queueNum;
         }
       }
+      release(&ptable.lock);
+
 
       if (p->state == RUNNABLE && p->queueNum == maxQueue)
       {
