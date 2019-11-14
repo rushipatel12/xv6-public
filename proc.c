@@ -348,6 +348,8 @@ void scheduler(void)
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
     {
       int maxQueue = 0;
+
+      //adjust the queue level for each process and get the maxQueue
       for (p = ptable.proc; p < &ptable.proc[NPROC]; p++){
         int queueIterations[4] = {500, 24, 16, 8};
 
@@ -375,6 +377,7 @@ void scheduler(void)
         }
       cprintf("end loop \n");
       cprintf("[%d] \n", maxQueue);
+      cprintf("[%s] \n", p->name);
 
 
       }
