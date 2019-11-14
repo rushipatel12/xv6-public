@@ -336,7 +336,7 @@ int wait(void)
 void scheduler(void)
 {
   struct proc *p;
-  struct proc *p2;
+  //struct proc *p2;
 
   struct cpu *c = mycpu();
   c->proc = 0;
@@ -351,8 +351,8 @@ void scheduler(void)
     {
       cprintf("process [%s:%d]. queue number: [%d], idle count: [%d], iterations left: %d0 ms \n", p->name, p->pid, p->queueNum, p->idleCount, p->iterationsLeft);
 
-      int maxQueue = 0;
-  /*
+      //int maxQueue = 0;
+    /*
       //adjust the queue level for each process and get the maxQueue
       for (p2 = ptable.proc; p2 < &ptable.proc[NPROC]; p2++){
         int queueIterations[4] = {500, 24, 16, 8};
